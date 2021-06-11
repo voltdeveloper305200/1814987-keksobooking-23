@@ -13,13 +13,11 @@ const getRandomInteger = function (min, max) {
   return Math.floor(rand);
 };
 
-console.log(getRandomInteger(1,5));
-
 
 // Случайное число с плавающей точкой
 // Попробовал написать сам, знаю что написал не особо правильно, но вроде работает
 
-const getRandomFractNumber = function (min, max, _afterDot){
+const getRandomFractNumber = function (min, max, afterDot){
   if (min >= max) {
     throw new RangeError('Значение min не должно быть больше max');
   }
@@ -27,7 +25,17 @@ const getRandomFractNumber = function (min, max, _afterDot){
     throw new RangeError('Нужны только положительные числа');
   }
   const rand = min + Math.random() * (max + 1 - min);
-  return (rand.toFixed(_afterDot));
+  return (rand.toFixed(afterDot));
 };
 
-console.log(getRandomFractNumber(1,5,5));
+
+
+// Функции для создания сгенерированных объектов
+
+const generateObjects = [];
+
+for (let i = 1; i < 10; i++) {
+  generateObjects.push({avatar: "img/avatars/user" + "0" + i + ".png}")
+}
+
+console.log(generateObjects);
