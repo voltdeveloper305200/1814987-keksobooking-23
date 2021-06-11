@@ -1,4 +1,15 @@
-/* eslint-disable no-undef */
+const HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TIME_CHECKIN = ['12:00', '13:00', '14:00'];
+const TIME_CHECKOUT = ['12:00', '13:00', '14:00'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS =
+['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
+const TITLES = ['Hello world', 'Hola mundo', 'Ciao mondo', 'Dia duit ar domhan'];
+
+
 // Случайное целое число
 // Взято с https://learn.javascript.ru
 // "Ошибку" добавил от себя)
@@ -14,9 +25,6 @@ const getRandomInteger = function (min, max) {
   return Math.floor(rand);
 };
 
-getRandomInteger(1,5);
-
-
 // Случайное число с плавающей точкой
 // Попробовал написать сам, знаю что написал не особо правильно, но вроде работает
 
@@ -30,8 +38,6 @@ const getRandomFractNumber = function (min, max, afterDot){
   const rand = min + Math.random() * (max + 1 - min);
   return (rand.toFixed(afterDot));
 };
-
-getRandomFractNumber(1,3,4);
 
 
 // Функции для создания сгенерированных объектов
@@ -57,7 +63,7 @@ const generateData = () => {
     const lng = getRandomFractNumber(139.70000, 139.80000, 5);
     result.push({
       author: {
-        avatar: `img/avatars/user` + `0${i}.png`,
+        avatar: `img/avatars/user0${i}.png`,
       },
       offer: {
         title: getRandomEllementOfArr(TITLES),
@@ -72,13 +78,12 @@ const generateData = () => {
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, nemo. Doloremque temporibus cupiditate architecto eaque numquam nihil quis quos.',
         photos: getRandomArrSlice(PHOTOS),
       },
-      location: {  lat, lng },
+      location: { lat, lng },
     },
     );
   }
   return result;
 };
 
-const data = generateData();
+generateData();
 
-console.log(data);
