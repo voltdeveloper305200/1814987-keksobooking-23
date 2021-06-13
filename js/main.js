@@ -1,6 +1,5 @@
-import {generateData} from './data.js'
+import {generateData} from './data.js';
 
-const data = generateData()
+generateData();
 
-console.log(data);
 

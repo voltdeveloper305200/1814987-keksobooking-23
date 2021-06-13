@@ -42,4 +42,4 @@ const generateData = () => {
   return result;
 };
 
-export {generateData}
+export {generateData};
