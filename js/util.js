@@ -40,4 +40,6 @@ const getRandomArrSlice = (arr) => {
   const randomLength = getRandomInteger(1, arr.length - 1);
   return arr.slice(0,randomLength);
 };
+
+
 export {getRandomInteger, getRandomFractNumber, getRandomEllementOfArr, getRandomArrSlice};
