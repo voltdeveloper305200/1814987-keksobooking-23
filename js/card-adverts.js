@@ -25,7 +25,7 @@ const checkAndFillData = (data, element, dataString) =>{
 // Функция рендеринга объявления
 const renderAdvertCard = (advert) => {
   const cloneTemplate = advertsTemplate.cloneNode(true);
-  const AvatarEl = cloneTemplate.querySelector('.popup__avatar');
+  const avatarEl = cloneTemplate.querySelector('.popup__avatar');
   const TitleEl = cloneTemplate.querySelector('.popup__title');
   const AddressEL = cloneTemplate.querySelector('.popup__text--address');
   const PriceEL = cloneTemplate.querySelector('.popup__text--price');
@@ -35,7 +35,7 @@ const renderAdvertCard = (advert) => {
   const FeaturesEl = cloneTemplate.querySelector('.popup__features');
   const DescriptionEl = cloneTemplate.querySelector('.popup__description');
   const PhotosEl = cloneTemplate.querySelector('.popup__photos');
-  AvatarEl.src = advert.author.avatar;
+  avatarEl.src = advert.author.avatar;
   checkAndFillData(advert.offer.title, TitleEl, advert.offer.title);
   checkAndFillData(advert.offer.address, AddressEL, advert.offer.address);
   checkAndFillData(advert.offer.price, PriceEL, `${advert.offer.price} Р/Ночь`);
