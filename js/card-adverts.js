@@ -25,31 +25,31 @@ const checkAndFillData = (data, element, dataString) =>{
 // Функция рендеринга объявления
 const renderAdvertCard = (advert) => {
   const cloneTemplate = advertsTemplate.cloneNode(true);
-  const AvatarEl = cloneTemplate.querySelector('.popup__avatar');
-  const TitleEl = cloneTemplate.querySelector('.popup__title');
-  const AddressEL = cloneTemplate.querySelector('.popup__text--address');
-  const PriceEL = cloneTemplate.querySelector('.popup__text--price');
-  const TypeEL = cloneTemplate.querySelector('.popup__type');
-  const RoomsAndGuestsEL = cloneTemplate.querySelector('.popup__text--capacity');
-  const CheckinAndCheckoutEL = cloneTemplate.querySelector('.popup__text--time');
-  const FeaturesEl = cloneTemplate.querySelector('.popup__features');
-  const DescriptionEl = cloneTemplate.querySelector('.popup__description');
-  const PhotosEl = cloneTemplate.querySelector('.popup__photos');
-  AvatarEl.src = advert.author.avatar;
-  checkAndFillData(advert.offer.title, TitleEl, advert.offer.title);
-  checkAndFillData(advert.offer.address, AddressEL, advert.offer.address);
-  checkAndFillData(advert.offer.price, PriceEL, `${advert.offer.price} Р/Ночь`);
-  checkAndFillData(advert.offer.type, TypeEL, offerTypeDisplay[advert.offer.type]);
-  checkAndFillData(advert.offer.rooms, RoomsAndGuestsEL, `${advert.offer.rooms} комнаты для ${advert.offer.guests} гостей`);
-  checkAndFillData(advert.offer.checkin, CheckinAndCheckoutEL, `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`);
-  checkAndFillData(advert.offer.description, DescriptionEl, advert.offer.description);
-  FeaturesEl.innerHTML = '';
+  const avatarEl = cloneTemplate.querySelector('.popup__avatar');
+  const titleEl = cloneTemplate.querySelector('.popup__title');
+  const addressEL = cloneTemplate.querySelector('.popup__text--address');
+  const priceEL = cloneTemplate.querySelector('.popup__text--price');
+  const typeEL = cloneTemplate.querySelector('.popup__type');
+  const roomsAndGuestsEL = cloneTemplate.querySelector('.popup__text--capacity');
+  const checkinAndCheckoutEL = cloneTemplate.querySelector('.popup__text--time');
+  const featuresEl = cloneTemplate.querySelector('.popup__features');
+  const descriptionEl = cloneTemplate.querySelector('.popup__description');
+  const photosEl = cloneTemplate.querySelector('.popup__photos');
+  avatarEl.src = advert.author.avatar;
+  checkAndFillData(advert.offer.title, titleEl, advert.offer.title);
+  checkAndFillData(advert.offer.address, addressEL, advert.offer.address);
+  checkAndFillData(advert.offer.price, priceEL, `${advert.offer.price} Р/Ночь`);
+  checkAndFillData(advert.offer.type, typeEL, offerTypeDisplay[advert.offer.type]);
+  checkAndFillData(advert.offer.rooms, roomsAndGuestsEL, `${advert.offer.rooms} комнаты для ${advert.offer.guests} гостей`);
+  checkAndFillData(advert.offer.checkin, checkinAndCheckoutEL, `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`);
+  checkAndFillData(advert.offer.description, descriptionEl, advert.offer.description);
+  featuresEl.innerHTML = '';
   advert.offer.features.forEach((feature) => {
     const li = document.createElement('li');
     li.classList.add('popup__feature', `popup__feature--${feature}`);
-    FeaturesEl.appendChild(li);
+    featuresEl.appendChild(li);
   });
-  PhotosEl.innerHTML = '';
+  photosEl.innerHTML = '';
   advert.offer.photos.forEach ((photo) => {
     const img = document.createElement('img');
     img.src = photo;
@@ -57,7 +57,7 @@ const renderAdvertCard = (advert) => {
     img.width = 45;
     img.classList.add('popup__photo');
     img.alt = 'Фотография жилья';
-    PhotosEl.appendChild(img);
+    photosEl.appendChild(img);
   });
   map.appendChild(cloneTemplate);
 };
