@@ -1,7 +1,7 @@
 const adForm = document.querySelector('.ad-form');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 
-// Функция, делающая страницу неактивной
+// Функция, делающая форму неактивной
 
 const deactivate = () =>{
   adForm.classList.add('ad-form--disabled');
@@ -10,7 +10,7 @@ const deactivate = () =>{
   });
 };
 
-// Функция, делающая страницу активной
+// Функция, делающая форму активной
 
 const activate = () =>{
   adForm.classList.remove('ad-form--disabled');
