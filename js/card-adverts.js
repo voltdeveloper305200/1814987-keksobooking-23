@@ -1,16 +1,17 @@
 import {generateData} from './data.js';
 import {getRandomEllementOfArr} from './util.js';
+import {HouseType} from './constants.js';
 
 const map = document.querySelector('#map-canvas');
 const advertsTemplate = document.querySelector('#card').content.querySelector('.popup');
 const adverts = generateData();
 const randomAdvert = getRandomEllementOfArr(adverts);
 const offerTypeDisplay = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец',
-  hotel: 'Отель',
+  [HouseType.FLAT]: 'Квартира',
+  [HouseType.BUNGALOW]: 'Бунгало',
+  [HouseType.HOUSE]: 'Дом',
+  [HouseType.PALACE]: 'Дворец',
+  [HouseType.HOTEL]: 'Отель',
 };
 
 // Функция проверки данных и наполнения DOM
