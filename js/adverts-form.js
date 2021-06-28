@@ -1,26 +1,33 @@
-import {HouseType, MinPriceLimitMap} from './constants.js';
+import {HouseType} from './constants.js';
 
-const QuantityRooms = {
+const MAX_INPUT_PRICE = 1000000;
+const MinPriceLimitMap = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 1000,
+};
+const RoomsQuantity = {
   ONE: '1',
   TWO: '2',
   THREE: '3',
   HUNDRED: '100',
 };
 
-const QuantityPlaces = {
+const PlacesQuantity = {
   ONE: '1',
   TWO: '2',
   THREE: '3',
   ZERO: '0',
 };
-const MAX_VALUE_INPUT = 1000000;
 const adForm = document.querySelector('.ad-form');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const inputTitle = adForm.querySelector('#title');
 const inputPrice = adForm.querySelector('#price');
 const typeSelect = adForm.querySelector('#type');
-const quantityRoomsSelect = adForm.querySelector('#room_number');
-const quantityPlacesSelect = adForm.querySelector('#capacity');
+const roomsSelect = adForm.querySelector('#room_number');
+const placesSelect = adForm.querySelector('#capacity');
 
 // Функция, делающая форму неактивной
 
@@ -52,25 +59,22 @@ inputTitle.addEventListener('input', () =>{
   } else{
     inputTitle.setCustomValidity('');
   }
-
-  inputTitle.reportValidity();
 });
 
 // Цена
 inputPrice.addEventListener('input',() =>{
   const valuePrice = Number(inputPrice.value);
-  if (valuePrice >= MAX_VALUE_INPUT) {
-    inputPrice.setCustomValidity('Цена слишком высокая');
+  let err = '';
+  if (valuePrice >= MAX_INPUT_PRICE) {
+    err = 'Цена слишком высокая';
   } else if(valuePrice < 0){
-    inputPrice.setCustomValidity('Допустимы только положительные числа');
-  }else{
-    inputPrice.setCustomValidity('');
+    err = 'Допустимы только положительные числа';
   }
-  inputPrice.reportValidity();
+  inputPrice.setCustomValidity(err);
 });
 
 // Тип жилья
-typeSelect.addEventListener('change', (evt) => {
+const setPricePlaceholder = (evt) => {
   if (evt.target.value === HouseType.FLAT) {
     inputPrice.placeholder = MinPriceLimitMap.flat;
   }else if(evt.target.value ===  HouseType.BUNGALOW){
@@ -82,25 +86,27 @@ typeSelect.addEventListener('change', (evt) => {
   }else if(evt.target.value ===  HouseType.PALACE){
     inputPrice.placeholder = MinPriceLimitMap.palace;
   }
-});
+};
+
+typeSelect.addEventListener('change', setPricePlaceholder);
 
 
 const validateCapacity = () =>{
   let error = '';
-  if (quantityRoomsSelect.value === QuantityRooms.ONE && quantityPlacesSelect.value !== QuantityPlaces.ONE) {
+  if (roomsSelect.value === RoomsQuantity.ONE && placesSelect.value !== PlacesQuantity.ONE) {
     error = '1 комната только для 1 гостя';
-  }else if(quantityRoomsSelect.value === QuantityRooms.TWO && (quantityPlacesSelect.value === QuantityPlaces.THREE
-    || quantityPlacesSelect.value === QuantityPlaces.ZERO)){
+  }else if(roomsSelect.value === RoomsQuantity.TWO && (placesSelect.value === PlacesQuantity.THREE
+    || placesSelect.value === PlacesQuantity.ZERO)){
     error = '2 комнаты для 1го или 2х гостей';
-  }else if(quantityRoomsSelect.value === QuantityRooms.THREE && quantityPlacesSelect.value === QuantityPlaces.ZERO){
+  }else if(roomsSelect.value === RoomsQuantity.THREE && placesSelect.value === PlacesQuantity.ZERO){
     error = '3 комнаты для 1го, 2х  или 3х гостей';
-  }else if(quantityRoomsSelect.value === QuantityRooms.HUNDRED && quantityPlacesSelect.value !== QuantityPlaces.ZERO){
+  }else if(roomsSelect.value === RoomsQuantity.HUNDRED && placesSelect.value !== PlacesQuantity.ZERO){
     error = '100 комнат не для гостей';
   }
-  quantityPlacesSelect.setCustomValidity(error);
+  placesSelect.setCustomValidity(error);
 };
 
-quantityRoomsSelect.addEventListener('change', validateCapacity);
-quantityPlacesSelect.addEventListener('change', validateCapacity);
+roomsSelect.addEventListener('change', validateCapacity);
+placesSelect.addEventListener('change', validateCapacity);
 
 export {activate, deactivate};
