@@ -25,7 +25,7 @@ const PlacesQuantity = {
 const adForm = document.querySelector('.ad-form');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const inputTitle = adForm.querySelector('#title');
-const priceValue = adForm.querySelector('#price');
+const priceInput = adForm.querySelector('#price');
 const typeSelect = adForm.querySelector('#type');
 const roomsSelect = adForm.querySelector('#room_number');
 const placesSelect = adForm.querySelector('#capacity');
@@ -60,17 +60,15 @@ const validateTitle = () =>{
 const validatePrice = () => {
   const minPrice = MinPriceLimit[typeSelect.value];
   let error = '';
-  const valuePrice = Number(priceValue.value);
-  priceValue.placeholder = minPrice;
+  const priceValue = Number(priceInput.value);
+  priceInput.placeholder = minPrice;
 
-  if (valuePrice >= MAX_INPUT_PRICE) {
+  if (priceValue >= MAX_INPUT_PRICE) {
     error = 'Цена слишком высокая';
-  } else if (valuePrice < 0) {
-    error = 'Допустимы только положительные числа';
-  } else if (valuePrice < minPrice) {
+  } else if (priceValue < minPrice) {
     error = 'Цена меньше минимальной';
   }
-  priceValue.setCustomValidity(error);
+  priceInput.setCustomValidity(error);
 };
 
 const validateCapacity = () =>{
@@ -96,7 +94,7 @@ const syncCheckInAndCheckOut = (evt) => {
 checkInSelect.addEventListener('change', syncCheckInAndCheckOut);
 checkOutSelect.addEventListener('change', syncCheckInAndCheckOut);
 inputTitle.addEventListener('input', validateTitle);
-priceValue.addEventListener('input', validatePrice);
+priceInput.addEventListener('input', validatePrice);
 typeSelect.addEventListener('change', validatePrice);
 roomsSelect.addEventListener('change', validateCapacity);
 placesSelect.addEventListener('change', validateCapacity);
