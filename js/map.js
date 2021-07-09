@@ -1,8 +1,10 @@
+import {adForm} from './adverts-form.js';
 import {generateData} from './data.js';
 import {getRandomEllementOfArr} from './util.js';
 import {HouseType} from './constants.js';
 
-const map = document.querySelector('#map-canvas');
+const map = L.map('map-canvas');
+const addressInput = adForm.querySelector('#address');
 const advertsTemplate = document.querySelector('#card').content.querySelector('.popup');
 const adverts = generateData();
 const randomAdvert = getRandomEllementOfArr(adverts);
@@ -13,8 +15,8 @@ const offerTypeDisplay = {
   [HouseType.PALACE]: 'Дворец',
   [HouseType.HOTEL]: 'Отель',
 };
+const latting = generateData();
 
-// Функция проверки данных и наполнения DOM
 const checkAndFillData = (data, element, dataString) =>{
   if (!data) {
     element.remove();
@@ -23,7 +25,6 @@ const checkAndFillData = (data, element, dataString) =>{
   }
 };
 
-// Функция рендеринга объявления
 const renderAdvertCard = (advert) => {
   const cloneTemplate = advertsTemplate.cloneNode(true);
   const avatarEl = cloneTemplate.querySelector('.popup__avatar');
@@ -60,6 +61,73 @@ const renderAdvertCard = (advert) => {
     img.alt = 'Фотография жилья';
     photosEl.appendChild(img);
   });
-  map.appendChild(cloneTemplate);
+  return cloneTemplate;
 };
+
+const initMap = (onMapLoad) => {
+  map
+    .on('load', onMapLoad)
+    .setView({
+      lat: 35.6895,
+      lng: 139.69171,
+    }, 10);
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+};
+
+const addMainMarker = () => {
+  const mainPinIcon = L.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  });
+  const mainPinMarker = L.marker(
+    {
+      lat: 35.6895,
+      lng: 139.69171,
+    },
+    {
+      draggable: true,
+      icon: mainPinIcon,
+    },
+  );
+  mainPinMarker.addTo(map);
+  mainPinMarker.on('moveend', (evt) => {
+    addressInput.value = evt.target.getLatLng();
+  });
+};
+
+const addMarkers = () => {
+  latting.forEach((elem) => {
+    const icon = L.icon({
+      iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+    const lattingLat = elem.location.lat;
+    const lattingLng = elem.location.lng;
+    const marker = L.marker(
+      {
+        lat: lattingLat,
+        lng:lattingLng,
+      },
+      {
+        icon,
+      },
+    );
+    marker
+      .addTo(map)
+      .bindPopup(renderAdvertCard(randomAdvert),
+        {
+          keepInView: true,
+        },
+      );
+  });
+};
+
+export {initMap, addMainMarker, addMarkers};
 

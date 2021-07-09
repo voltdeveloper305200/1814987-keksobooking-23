@@ -99,4 +99,4 @@ typeSelect.addEventListener('change', validatePrice);
 roomsSelect.addEventListener('change', validateCapacity);
 placesSelect.addEventListener('change', validateCapacity);
 
-export {activate, deactivate};
+export {activate, deactivate, adForm};

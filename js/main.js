@@ -2,6 +2,7 @@ import {generateData} from './data.js';
 import './card-adverts.js';
 import {activate as activateAdvertsForm, deactivate as deactivateAdvertsForm} from './adverts-form.js';
 import {activate as activateFilterForm, deactivate as deactivateFilterForm} from './filter-form.js';
+import {initMap, addMainMarker, addMarkers} from './map.js';
 
 
 const activateApp = () =>{
@@ -17,6 +18,7 @@ const deactivateApp = () =>{
 generateData();
 
 deactivateApp();
-activateApp();
 
-
+initMap(activateApp);
+addMainMarker();
+addMarkers();
