@@ -1,10 +1,7 @@
-import {generateData} from './data.js';
-import {getRandomEllementOfArr} from './util.js';
+
 import {HouseType} from './constants.js';
 
 const advertsTemplate = document.querySelector('#card').content.querySelector('.popup');
-const adverts = generateData();
-const randomAdvert = getRandomEllementOfArr(adverts);
 const offerTypeDisplay = {
   [HouseType.FLAT]: 'Квартира',
   [HouseType.BUNGALOW]: 'Бунгало',
@@ -62,5 +59,5 @@ const renderAdvertCard = (advert) => {
   return cloneTemplate;
 };
 
-export {renderAdvertCard, randomAdvert};
+export {renderAdvertCard};
 
