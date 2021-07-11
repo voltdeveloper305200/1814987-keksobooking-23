@@ -1,11 +1,7 @@
-import {generateData} from './data.js';
-import {getRandomEllementOfArr} from './util.js';
+
 import {HouseType} from './constants.js';
 
-const map = document.querySelector('#map-canvas');
 const advertsTemplate = document.querySelector('#card').content.querySelector('.popup');
-const adverts = generateData();
-const randomAdvert = getRandomEllementOfArr(adverts);
 const offerTypeDisplay = {
   [HouseType.FLAT]: 'Квартира',
   [HouseType.BUNGALOW]: 'Бунгало',
@@ -60,8 +56,8 @@ const renderAdvertCard = (advert) => {
     img.alt = 'Фотография жилья';
     photosEl.appendChild(img);
   });
-  map.appendChild(cloneTemplate);
+  return cloneTemplate;
 };
 
-renderAdvertCard(randomAdvert);
+export {renderAdvertCard};
 

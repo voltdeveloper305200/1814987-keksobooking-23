@@ -26,6 +26,7 @@ const adForm = document.querySelector('.ad-form');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const inputTitle = adForm.querySelector('#title');
 const priceInput = adForm.querySelector('#price');
+const addressInput = adForm.querySelector('#address');
 const typeSelect = adForm.querySelector('#type');
 const roomsSelect = adForm.querySelector('#room_number');
 const placesSelect = adForm.querySelector('#capacity');
@@ -91,6 +92,10 @@ const syncCheckInAndCheckOut = (evt) => {
   checkInSelect.value = evt.target.value;
 };
 
+const setAddress = (lat, lng) => {
+  addressInput.value = `${lat}, ${lng}`;
+};
+
 checkInSelect.addEventListener('change', syncCheckInAndCheckOut);
 checkOutSelect.addEventListener('change', syncCheckInAndCheckOut);
 inputTitle.addEventListener('input', validateTitle);
@@ -99,4 +104,4 @@ typeSelect.addEventListener('change', validatePrice);
 roomsSelect.addEventListener('change', validateCapacity);
 placesSelect.addEventListener('change', validateCapacity);
 
-export {activate, deactivate};
+export {activate, deactivate, setAddress};
