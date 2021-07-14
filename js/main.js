@@ -19,7 +19,7 @@ const deactivateApp = () => {
 deactivateApp();
 
 initMap(activateApp, (coords) => {
-  setAddress(coords.lat.toFixed(5), coords.lng.toFixed(5));
+  setAddress(coords.lat, coords.lng);
 });
 
 renderAdMarkers(generateData());

@@ -1,4 +1,5 @@
 const MAX_INPUT_PRICE = 1000000;
+const FIX_COORD_LENGTH = 5;
 const MAX_TITLE_LENGTH = 100;
 const MIN_TITLE_LENGTH = 30;
 const MinPriceLimit = {
@@ -93,7 +94,7 @@ const syncCheckInAndCheckOut = (evt) => {
 };
 
 const setAddress = (lat, lng) => {
-  addressInput.value = `${lat}, ${lng}`;
+  addressInput.value = `${lat.toFixed(FIX_COORD_LENGTH)}, ${lng.toFixed(FIX_COORD_LENGTH)}`;
 };
 
 checkInSelect.addEventListener('change', syncCheckInAndCheckOut);
