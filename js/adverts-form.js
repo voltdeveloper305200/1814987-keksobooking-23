@@ -1,3 +1,5 @@
+import { sendData } from './api.js';
+
 const MAX_INPUT_PRICE = 1000000;
 const MAX_TITLE_LENGTH = 100;
 const MIN_TITLE_LENGTH = 30;
@@ -96,6 +98,19 @@ const setAddress = (lat, lng) => {
   addressInput.value = `${lat}, ${lng}`;
 };
 
+
+const setUserFormSubmit = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+
 checkInSelect.addEventListener('change', syncCheckInAndCheckOut);
 checkOutSelect.addEventListener('change', syncCheckInAndCheckOut);
 inputTitle.addEventListener('input', validateTitle);
@@ -104,4 +119,4 @@ typeSelect.addEventListener('change', validatePrice);
 roomsSelect.addEventListener('change', validateCapacity);
 placesSelect.addEventListener('change', validateCapacity);
 
-export {activate, deactivate, setAddress};
+export {activate, deactivate, setAddress, setUserFormSubmit};
