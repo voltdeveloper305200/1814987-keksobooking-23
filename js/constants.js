@@ -6,5 +6,9 @@ const HouseType = {
   PALACE: 'palace',
 };
 
+const LattingMap = {
+  LAT: 35.6895,
+  LNG: 139.69171,
+};
 
-export {HouseType};
+export {HouseType, LattingMap};

@@ -1,8 +1,12 @@
-import{isEnterEvent, isEscEvent} from './util.js';
+import {isEnterEvent, isEscEvent} from './util.js';
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
+const PopupType = {
+  ERROR: errorTemplate.cloneNode(true),
+  SUCCESS: successTemplate.cloneNode(true),
+};
 
 let activePopup = null;
 
@@ -20,18 +24,12 @@ function onKeyPress(evt) {
   }
 }
 
-const openErrorPopup = () => {
-  activePopup = errorTemplate.cloneNode(true);
+const openPopup = (type) => {
+  activePopup = type;
   document.body.appendChild(activePopup);
   activePopup.addEventListener('click', closePopup);
   document.addEventListener('keydown', onKeyPress);
 };
 
-const openSuccessPopup = () => {
-  activePopup = successTemplate.cloneNode(true);
-  document.body.appendChild(activePopup);
-  activePopup.addEventListener('click', closePopup);
-  document.addEventListener('keydown', onKeyPress);
-};
 
-export {openSuccessPopup, openErrorPopup};
+export {openPopup, PopupType};
