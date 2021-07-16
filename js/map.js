@@ -1,14 +1,34 @@
 import { renderAdvertCard} from './card-adverts.js';
+import {LattingMap} from './constants.js';
+
+const MAP_ZOOM = 12;
 
 const map = L.map('map-canvas');
+
+const mainPinIcon = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+const mainPinMarker = L.marker(
+  {
+    lat: LattingMap.LAT,
+    lng: LattingMap.LNG,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
 
 const initMap = (onMapLoad, onMainPinMoveEnd) => {
   map
     .on('load', onMapLoad)
     .setView({
-      lat: 35.6895,
-      lng: 139.69171,
-    }, 10);
+      lat: LattingMap.LAT,
+      lng: LattingMap.LNG,
+    }, MAP_ZOOM);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -17,26 +37,9 @@ const initMap = (onMapLoad, onMainPinMoveEnd) => {
     },
   ).addTo(map);
 
-  const mainPinIcon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
-  });
-
-  const mainPinMarker = L.marker(
-    {
-      lat: 35.6895,
-      lng: 139.69171,
-    },
-    {
-      draggable: true,
-      icon: mainPinIcon,
-    },
-  );
-
   mainPinMarker.addTo(map);
 
-  mainPinMarker.on('moveend', (evt) => {
+  mainPinMarker.on('drag', (evt) => {
     onMainPinMoveEnd(evt.target.getLatLng());
   });
 };
@@ -68,5 +71,17 @@ const renderAdMarkers = (adsData) => {
   });
 };
 
-export {initMap, renderAdMarkers};
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: LattingMap.LAT,
+    lng: LattingMap.LNG,
+  });
+
+  map.setView({
+    lat: LattingMap.LAT,
+    lng: LattingMap.LNG,
+  }, MAP_ZOOM);
+};
+
+export {initMap, renderAdMarkers, resetMap};
 

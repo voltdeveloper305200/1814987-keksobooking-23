@@ -1,4 +1,8 @@
+import { sendData } from './api.js';
+import {LattingMap} from './constants.js';
+
 const MAX_INPUT_PRICE = 1000000;
+const FIX_VALUE_ADDRESS = 5;
 const MAX_TITLE_LENGTH = 100;
 const MIN_TITLE_LENGTH = 30;
 const MinPriceLimit = {
@@ -32,6 +36,11 @@ const roomsSelect = adForm.querySelector('#room_number');
 const placesSelect = adForm.querySelector('#capacity');
 const checkInSelect = adForm.querySelector('#timein');
 const checkOutSelect = adForm.querySelector('#timeout');
+const resetButton = adForm.querySelector('.ad-form__reset');
+
+const setAddress = (lat, lng) => {
+  addressInput.value = `${lat.toFixed(FIX_VALUE_ADDRESS)}, ${lng.toFixed(FIX_VALUE_ADDRESS)}`;
+};
 
 const deactivate = () =>{
   adForm.classList.add('ad-form--disabled');
@@ -42,6 +51,7 @@ const deactivate = () =>{
 
 const activate = () =>{
   adForm.classList.remove('ad-form--disabled');
+  setAddress(LattingMap.LAT, LattingMap.LNG);
   adFormFieldsets.forEach((element) => {
     element.disabled = false;
   });
@@ -92,8 +102,20 @@ const syncCheckInAndCheckOut = (evt) => {
   checkInSelect.value = evt.target.value;
 };
 
-const setAddress = (lat, lng) => {
-  addressInput.value = `${lat}, ${lng}`;
+const setUserFormSubmit = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+const resetForm = () => {
+  adForm.reset();
+  setAddress(LattingMap.LAT, LattingMap.LNG);
 };
 
 checkInSelect.addEventListener('change', syncCheckInAndCheckOut);
@@ -104,4 +126,4 @@ typeSelect.addEventListener('change', validatePrice);
 roomsSelect.addEventListener('change', validateCapacity);
 placesSelect.addEventListener('change', validateCapacity);
 
-export {activate, deactivate, setAddress};
+export {activate, deactivate, setAddress, setUserFormSubmit, resetForm, resetButton};

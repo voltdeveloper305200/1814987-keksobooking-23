@@ -2,6 +2,8 @@
 // Взято с https://learn.javascript.ru
 // "Ошибку" добавил от себя)
 
+const ALERT_SHOW_TIME = 5000;
+
 const getRandomInteger =  (min, max) => {
   if (min >= max) {
     throw new RangeError('Значение min не должно быть больше max');
@@ -27,19 +29,29 @@ const getRandomFractNumber =  (min, max, afterDot) => {
   return (rand.toFixed(afterDot));
 };
 
-// Функции для создания сгенерированных объектов
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-// Случайное значение массива
-const getRandomEllementOfArr = (arr) => {
-  const randomNameIndex = getRandomInteger(0, arr.length - 1);
-  return arr[randomNameIndex];
+const isEnterEvent = (evt) => evt.key === 'Enter';
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-// Случайно порезанный массив
-const getRandomArrSlice = (arr) => {
-  const randomLength = getRandomInteger(1, arr.length - 1);
-  return arr.slice(0,randomLength);
-};
-
-
-export {getRandomInteger, getRandomFractNumber, getRandomEllementOfArr, getRandomArrSlice};
+export {getRandomInteger, getRandomFractNumber, isEscEvent, isEnterEvent, showAlert};

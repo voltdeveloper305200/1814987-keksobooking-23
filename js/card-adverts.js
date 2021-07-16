@@ -1,4 +1,3 @@
-
 import {HouseType} from './constants.js';
 
 const advertsTemplate = document.querySelector('#card').content.querySelector('.popup');
@@ -41,21 +40,28 @@ const renderAdvertCard = (advert) => {
   checkAndFillData(advert.offer.checkin, checkinAndCheckoutEL, `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`);
   checkAndFillData(advert.offer.description, descriptionEl, advert.offer.description);
   featuresEl.innerHTML = '';
-  advert.offer.features.forEach((feature) => {
-    const li = document.createElement('li');
-    li.classList.add('popup__feature', `popup__feature--${feature}`);
-    featuresEl.appendChild(li);
-  });
-  photosEl.innerHTML = '';
-  advert.offer.photos.forEach ((photo) => {
-    const img = document.createElement('img');
-    img.src = photo;
-    img.height = 40;
-    img.width = 45;
-    img.classList.add('popup__photo');
-    img.alt = 'Фотография жилья';
-    photosEl.appendChild(img);
-  });
+  if (!advert.offer.features) {
+    featuresEl.remove();
+  } else {
+    advert.offer.features.forEach((feature) => {
+      const li = document.createElement('li');
+      li.classList.add('popup__feature', `popup__feature--${feature}`);
+      featuresEl.appendChild(li);
+    });
+  }
+  if (!advert.offer.photos) {
+    photosEl.innerHTML = '';
+  } else {
+    advert.offer.photos.forEach ((photo) => {
+      const img = document.createElement('img');
+      img.src = photo;
+      img.height = 40;
+      img.width = 45;
+      img.classList.add('popup__photo');
+      img.alt = 'Фотография жилья';
+      photosEl.appendChild(img);
+    });
+  }
   return cloneTemplate;
 };
 
