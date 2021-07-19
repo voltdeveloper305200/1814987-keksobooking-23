@@ -1,18 +1,38 @@
-import './card-adverts.js';
-import {activate as activateAdvertsForm, deactivate as deactivateAdvertsForm} from './adverts-form.js';
-import { setAddress, setUserFormSubmit, resetForm, resetButton} from './adverts-form.js';
-import {activate as activateFilterForm, deactivate as deactivateFilterForm} from './filter-form.js';
-import {initMap, renderAdMarkers, resetMap} from './map.js';
+import {
+  activate as activateAdvertsForm,
+  deactivate as deactivateAdvertsForm,
+  setAddress,
+  setUserFormSubmit,
+  resetForm,
+  resetButton
+} from './adverts-form.js';
+import {
+  activate as activateFilterForm,
+  deactivate as deactivateFilterForm,
+  getFilteredAds,
+  mapFilterForm
+} from './filter-form.js';
+import {initMap, renderAdMarkers, resetMap, removeAdMarkers} from './map.js';
 import {getData} from './api.js';
 import {openPopup, PopupType} from './popup.js';
+import {debounce} from './util.js';
 
-const ADVERTS_COUNT = 10;
+let adsData = null;
+
+const onFilterChange = debounce((adverts) => {
+  removeAdMarkers();
+  renderAdMarkers(getFilteredAds(adverts));
+});
 
 const activateApp = () => {
   activateAdvertsForm();
   getData((adverts) => {
-    renderAdMarkers(adverts.slice(0, ADVERTS_COUNT));
+    adsData = adverts;
+    renderAdMarkers(getFilteredAds(adverts));
     activateFilterForm();
+    mapFilterForm.addEventListener('change', () => {
+      onFilterChange(adverts);
+    });
   });
 };
 
@@ -24,6 +44,9 @@ const deactivateApp = () => {
 const resetApp = () => {
   resetMap();
   resetForm();
+  mapFilterForm.reset();
+  removeAdMarkers();
+  renderAdMarkers(getFilteredAds(adsData));
 };
 
 deactivateApp();
@@ -38,6 +61,7 @@ const onFormSubmitSuccess = () => {
 
 const onFormSubmitError = () => {
   openPopup(PopupType.ERROR);
+  resetApp();
 };
 
 setUserFormSubmit(onFormSubmitSuccess, onFormSubmitError);

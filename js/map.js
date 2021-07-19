@@ -5,6 +5,8 @@ const MAP_ZOOM = 12;
 
 const map = L.map('map-canvas');
 
+const adMarkersGroup = L.layerGroup();
+
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
@@ -39,6 +41,8 @@ const initMap = (onMapLoad, onMainPinMoveEnd) => {
 
   mainPinMarker.addTo(map);
 
+  adMarkersGroup.addTo(map);
+
   mainPinMarker.on('drag', (evt) => {
     onMainPinMoveEnd(evt.target.getLatLng());
   });
@@ -62,7 +66,7 @@ const renderAdMarkers = (adsData) => {
       },
     );
     marker
-      .addTo(map)
+      .addTo(adMarkersGroup)
       .bindPopup(renderAdvertCard(ad),
         {
           keepInView: true,
@@ -83,5 +87,9 @@ const resetMap = () => {
   }, MAP_ZOOM);
 };
 
-export {initMap, renderAdMarkers, resetMap};
+const removeAdMarkers = () => {
+  adMarkersGroup.clearLayers();
+};
+
+export {initMap, renderAdMarkers, resetMap, removeAdMarkers};
 
