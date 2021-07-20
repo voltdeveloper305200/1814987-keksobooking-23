@@ -57,11 +57,11 @@ initMap(activateApp, (coords) => {
 
 const onFormSubmitSuccess = () => {
   openPopup(PopupType.SUCCESS);
+  resetApp();
 };
 
 const onFormSubmitError = () => {
   openPopup(PopupType.ERROR);
-  resetApp();
 };
 
 setUserFormSubmit(onFormSubmitSuccess, onFormSubmitError);

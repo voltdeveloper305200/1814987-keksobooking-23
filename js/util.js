@@ -1,42 +1,8 @@
-// Случайное целое число
-// Взято с https://learn.javascript.ru
-// "Ошибку" добавил от себя)
-
 const ALERT_SHOW_TIME = 5000;
-
-const getRandomInteger =  (min, max) => {
-  if (min >= max) {
-    throw new RangeError('Значение min не должно быть больше max');
-  }
-  if (min < 0 || max < 0) {
-    throw new RangeError('Нужны только положительные числа');
-  }
-  const rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-};
-
-// Случайное число с плавающей точкой
-// Попробовал написать сам, знаю что написал не особо правильно, но вроде работает
-
-const getRandomFractNumber =  (min, max, afterDot) => {
-  if (min >= max) {
-    throw new RangeError('Значение min не должно быть больше max');
-  }
-  if (min < 0 || max < 0) {
-    throw new RangeError('Нужны только положительные числа');
-  }
-  const rand = min + Math.random() * (max + 1 - min);
-  return (rand.toFixed(afterDot));
-};
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const isEnterEvent = (evt) => evt.key === 'Enter';
-
-const getRandomEllementOfArr = (arr) => {
-  const randomNameIndex = getRandomInteger(0, arr.length - 1);
-  return arr[randomNameIndex];
-};
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -80,4 +46,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {getRandomInteger, getRandomFractNumber, isEscEvent, isEnterEvent, showAlert, getRandomEllementOfArr, debounce};
+export {isEscEvent, isEnterEvent, showAlert, debounce};

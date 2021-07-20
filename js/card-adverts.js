@@ -49,9 +49,8 @@ const renderAdvertCard = (advert) => {
       featuresEl.appendChild(li);
     });
   }
-  if (!advert.offer.photos) {
-    photosEl.innerHTML = '';
-  } else {
+  photosEl.innerHTML = '';
+  if (advert.offer.photos) {
     advert.offer.photos.forEach ((photo) => {
       const img = document.createElement('img');
       img.src = photo;

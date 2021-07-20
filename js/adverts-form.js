@@ -115,6 +115,7 @@ const setUserFormSubmit = (onSuccess, onFail) => {
 
 const resetForm = () => {
   adForm.reset();
+  validatePrice();
   setAddress(LattingMap.LAT, LattingMap.LNG);
 };
 
